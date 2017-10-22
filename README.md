@@ -8,4 +8,4 @@ Drives a rover avoiding obstacles with an L298N Dual H Bridge controller for the
 
 ### How to run ###
 
-The program has been tested in Raspbian and Raspberry Pi Zero. The program assumes some pin configuration which can be found and changed in the rover.c file. To run it, type make in the folder to use the makefile and compile it. Then run ./rover to run the program.
+The program has been tested in Raspbian and Raspberry Pi Zero. The program assumes some pin configuration which can be found and changed in the rover.c file in the initialisation function. To run it, type make in the folder to use the makefile and compile it. Then run ./rover to run the program.
