@@ -22,7 +22,7 @@ int l298n_IN3;
 int l298n_IN4;
 
 /// Initialises wiringPi library.
-void initialise_l298n(int motor1in1, int motor1in2, int motor2in3, int motor2in4)
+void l298n_initialise(int motor1in1, int motor1in2, int motor2in3, int motor2in4)
 {
     if (wiringPiSetup() == -1) {
         exit(EXIT_FAILURE);
@@ -39,7 +39,7 @@ void initialise_l298n(int motor1in1, int motor1in2, int motor2in3, int motor2in4
     pinMode(l298n_IN4, OUTPUT);
 }
 
-void forward()
+void l298n_forward()
 {
     printf("Forward\n");
     digitalWrite(l298n_IN1, LOW);
@@ -48,7 +48,7 @@ void forward()
     digitalWrite(l298n_IN4, LOW);
 }
 
-void reverse()
+void l298n_reverse()
 {
     printf("Reverse\n");
     digitalWrite(l298n_IN1, HIGH);
@@ -57,7 +57,7 @@ void reverse()
     digitalWrite(l298n_IN4, HIGH);
 }
 
-void turn_right()
+void l298n_turn_right()
 {
     printf("Turning right\n");
     digitalWrite(l298n_IN1, LOW);
@@ -66,7 +66,7 @@ void turn_right()
     digitalWrite(l298n_IN4, HIGH);
 }
 
-void turn_left()
+void l298n_turn_left()
 {
     printf("Turning left\n");
     digitalWrite(l298n_IN1, HIGH);
@@ -75,7 +75,7 @@ void turn_left()
     digitalWrite(l298n_IN4, LOW);
 }
 
-void stop()
+void l298n_stop()
 {
     printf("Stopping\n");
     digitalWrite(l298n_IN1, LOW);
@@ -84,7 +84,7 @@ void stop()
     digitalWrite(l298n_IN4, LOW);
 }
 
-void cleanUp_l298n()
+void l298n_cleanUp()
 {
     printf("Cleaning used l298n GPIO pins\n");
     pinMode(l298n_IN1, INPUT);
@@ -103,7 +103,7 @@ void cleanUp_l298n()
 
     printf("Raspberry Pi wiringPi L298N Dual H Bridge Motor test program.\n");
 
-    initialise_l298n(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])); // 2 3 21 22
+    l298n_initialise(atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])); // 2 3 21 22
 
     if (setuid(getuid()) < 0) 
     {
@@ -115,25 +115,25 @@ void cleanUp_l298n()
 
     delay(50);
 
-    forward();
+    l298n_forward();
     delay(1000);
-    stop();
+    l298n_stop();
     delay(STOP_DELAY);
-    reverse();
+    l298n_reverse();
     delay(1000);
-    stop();
+    l298n_stop();
     delay(STOP_DELAY);
 
-    turn_left();
+    l298n_turn_left();
     delay(500);
-    stop();
+    l298n_stop();
     delay(STOP_DELAY);
-    turn_right();
+    l298n_turn_right();
     delay(500);
-    stop();
+    l298n_stop();
     delay(STOP_DELAY);
     
-    cleanUp_l298n();
+    l298n_cleanUp();
     
     return 0;
 }*/

@@ -1,7 +1,7 @@
-void initialise_l298n(int, int, int, int);
-void forward();
-void reverse();
-void turn_right();
-void turn_left();
-void stop();
-void cleanUp_l298n();
+void l298n_initialise(int, int, int, int);
+void l298n_forward();
+void l298n_reverse();
+void l298n_turn_right();
+void l298n_turn_left();
+void l298n_stop();
+void l298n_cleanUp();

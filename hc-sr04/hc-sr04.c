@@ -19,7 +19,7 @@ int hc_sr04_TRIG;
 int hc_sr04_ECHO;
 
 /// Initialises wiringPi library.
-void initialise_hc_sr04(int newTrig, int newEcho)
+void hc_sr04_initialise(int newTrig, int newEcho)
 {
     if (wiringPiSetup() == -1) {
         exit(EXIT_FAILURE);
@@ -33,7 +33,7 @@ void initialise_hc_sr04(int newTrig, int newEcho)
 }
 
 /// Returns the distance in centimeters
-float calculateDistance()
+float hc_sr04_calculateDistance()
 {
     long ping      = 0;
     long pong      = 0;
@@ -82,11 +82,11 @@ float calculateDistance()
 }
 
 /// This is to ensure that a missed distance calculation will be ignored.
-float getMiddleOfThree()
+float hc_sr04_getMiddleOfThree()
 {
-    float a = calculateDistance();
-    float b = calculateDistance();
-    float c = calculateDistance();
+    float a = hc_sr04_calculateDistance();
+    float b = hc_sr04_calculateDistance();
+    float c = hc_sr04_calculateDistance();
 
     float middleOfThree = fmaxf(fminf(a, b), fminf(fmaxf(a, b), c));
 
@@ -95,7 +95,7 @@ float getMiddleOfThree()
     return middleOfThree;
 }
 
-void cleanUp_hc_sr04()
+void hc_sr04_cleanUp()
 {
     printf("Cleaning used hc-sr04 GPIO pins\n");
     pinMode(hc_sr04_TRIG, INPUT);
@@ -111,7 +111,7 @@ void cleanUp_hc_sr04()
 
     printf("Raspberry Pi wiringPi HC-SR04 Sonar test program.\n");
 
-    initialise_hc_sr04(atoi(argv[1]), atoi(argv[2])); // 7 0
+    hc_sr04_initialise(atoi(argv[1]), atoi(argv[2])); // 7 0
         
     if (setuid(getuid()) < 0) 
     {
@@ -119,9 +119,9 @@ void cleanUp_hc_sr04()
         exit(EXIT_FAILURE);
     }
 
-    getMiddleOfThree();
+    hc_sr04_getMiddleOfThree();
 
-    cleanUp_hc_sr04();
+    hc_sr04_cleanUp();
 
     return 0;
 }*/

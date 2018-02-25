@@ -29,8 +29,8 @@ void intHandler(int dummy)
  **/
 void initialisation()
 {
-    initialise_hc_sr04(7, 0);
-    initialise_l298n(2, 3, 21, 22);
+    hc_sr04_initialise(7, 0);
+    l298n_initialise(2, 3, 21, 22);
 }
 
 /**
@@ -38,8 +38,8 @@ void initialisation()
  **/
 void cleanUp()
 {
-    cleanUp_hc_sr04();
-    cleanUp_l298n();
+    hc_sr04_cleanUp();
+    l298n_cleanUp();
 }
 
 /**
@@ -59,20 +59,20 @@ void drive()
     /* Current index of distances to register. */
     int distancesCurIndex = 0;
 
-    forward();
+    l298n_forward();
 
     // initialise distances
     // length of 3 was tested but there were a lot of false positives.
-    distances[0] = getMiddleOfThree();
-    distances[1] = getMiddleOfThree();
-    distances[2] = getMiddleOfThree();
-    distances[3] = getMiddleOfThree();
-    distances[4] = getMiddleOfThree();
+    distances[0] = hc_sr04_getMiddleOfThree();
+    distances[1] = hc_sr04_getMiddleOfThree();
+    distances[2] = hc_sr04_getMiddleOfThree();
+    distances[3] = hc_sr04_getMiddleOfThree();
+    distances[4] = hc_sr04_getMiddleOfThree();
 
     while(keepRunningProgram)
     {
         // get distance from an obstacle
-        distances[distancesCurIndex] = getMiddleOfThree();
+        distances[distancesCurIndex] = hc_sr04_getMiddleOfThree();
 
         if(movingForward)
         {
@@ -80,17 +80,17 @@ void drive()
             if(distances[distancesCurIndex] < 20.0)
             {
                 movingForward = 0;
-                stop();
+                l298n_stop();
                 delay(STOP_DELAY);
-                reverse();
+                l298n_reverse();
                 delay(REVERSE_DELAY);
                 
                 if(turnRight)
-                    turn_right();
+                    l298n_turn_right();
                 else
-                    turn_left();
+                    l298n_turn_left();
                 delay(TURN_DELAY);
-                stop();
+                l298n_stop();
             }
             else
             {
@@ -103,9 +103,9 @@ void drive()
                 )
                 {
                     movingForward = 0;
-                    stop();
+                    l298n_stop();
                     delay(STOP_DELAY);
-                    reverse();
+                    l298n_reverse();
                     delay(REVERSE_STACK_DELAY);
                     forceTurn = 1;
                 }
@@ -118,18 +118,18 @@ void drive()
             {
                 // keep turning
                 delay(STOP_DELAY);
-                if(turn_right)
-                    turn_right();
+                if(turnRight)
+                    l298n_turn_right();
                 else
-                    turn_left();
+                    l298n_turn_left();
                 delay(TURN_DELAY);
-                stop();
+                l298n_stop();
                 forceTurn = 0;
             }
             else
             {
                 // no obstacle found, keep going!
-                forward();
+                l298n_forward();
                 movingForward = 1;
                 turnRight = turnRight?0:1;
             }
